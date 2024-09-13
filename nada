@@ -1,1 +1,185 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Vocacional</title>
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f0f0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+        }
+        #quiz-container {
+            background-color: #fff;
+            padding: 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            width: 400px;
+            text-align: center;
+        }
+        h1 {
+            font-size: 24px;
+            color: #333;
+            margin-bottom: 20px;
+        }
+        h2 {
+            font-size: 18px;
+            color: #555;
+            margin-bottom: 15px;
+        }
+        .question {
+            margin-bottom: 20px;
+        }
+        .question button {
+            width: 100%;
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            margin: 5px 0;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: background-color 0.3s;
+        }
+        .question button:hover {
+            background-color: #45a049;
+        }
+        .result {
+            display: none;
+            padding: 20px;
+            background-color: #d1ecf1;
+            border: 1px solid #bee5eb;
+            color: #0c5460;
+            margin-top: 20px;
+            font-size: 18px;
+        }
+    </style>
+</head>
+<body>
 
+    <div id="quiz-container">
+        <h1>Teste Vocacional</h1>
+        
+        <!-- Perguntas do Teste -->
+        <div id="question1" class="question">
+            <h2>Qual área da saúde mais te chama a atenção?</h2>
+            <button onclick="answer('A')">Diagnóstico por imagem</button>
+            <button onclick="answer('B')">Cuidado com idosos</button>
+            <button onclick="answer('C')">Alimentação saudável</button>
+        </div>
+
+        <div id="question2" class="question" style="display: none;">
+            <h2>Você prefere trabalhar com:</h2>
+            <button onclick="answer('A')">Máquinas</button>
+            <button onclick="answer('B')">Pessoas</button>
+            <button onclick="answer('C')">Ambos</button>
+        </div>
+
+        <div id="question3" class="question" style="display: none;">
+            <h2>Gosta de atividades:</h2>
+            <button onclick="answer('A')">Que exigem precisão e atenção a detalhes</button>
+            <button onclick="answer('B')">Mais dinâmicas e que envolvam resolução de problemas</button>
+            <button onclick="answer('C')">Que lidam com aspectos emocionais e humanos</button>
+        </div>
+
+        <div id="question4" class="question" style="display: none;">
+            <h2>Você se considera uma pessoa mais:</h2>
+            <button onclick="answer('A')">Prática</button>
+            <button onclick="answer('B')">Teórica</button>
+            <button onclick="answer('C')">Empática</button>
+        </div>
+
+        <div id="question5" class="question" style="display: none;">
+            <h2>Onde são suas melhores notas na escola?</h2>
+            <button onclick="answer('A')">Ciências Exatas e Biológicas</button>
+            <button onclick="answer('B')">Biologia e Química</button>
+            <button onclick="answer('C')">Ciências Humanas e Biológicas</button>
+        </div>
+
+        <div id="question6" class="question" style="display: none;">
+            <h2>Que matérias mais gosta de estudar?</h2>
+            <button onclick="answer('A')">Física e Tecnologia</button>
+            <button onclick="answer('B')">Biologia e Nutrição</button>
+            <button onclick="answer('C')">Psicologia e Sociologia</button>
+        </div>
+
+        <div id="question7" class="question" style="display: none;">
+            <h2>Você se considera uma pessoa paciente e cuidadosa?</h2>
+            <button onclick="answer('A')">Sim</button>
+            <button onclick="answer('B')">Não</button>
+            <button onclick="answer('C')">Dependendo da situação</button>
+        </div>
+
+        <div id="question8" class="question" style="display: none;">
+            <h2>Você prefere trabalhar:</h2>
+            <button onclick="answer('A')">Em equipe</button>
+            <button onclick="answer('B')">Sozinho</button>
+            <button onclick="answer('C')">Um pouco de cada</button>
+        </div>
+
+        <div id="question9" class="question" style="display: none;">
+            <h2>O que você considera mais importante no trabalho?</h2>
+            <button onclick="answer('A')">Salário</button>
+            <button onclick="answer('B')">Ajudar os outros</button>
+            <button onclick="answer('C')">Autonomia</button>
+        </div>
+
+        <div id="question10" class="question" style="display: none;">
+            <h2>O que é mais importante?</h2>
+            <button onclick="answer('A')">Salário</button>
+            <button onclick="answer('B')">Realização pessoal</button>
+            <button onclick="answer('C')">Crescimento profissional</button>
+        </div>
+
+        <div id="question11" class="question" style="display: none;">
+            <h2>Prefere um trabalho:</h2>
+            <button onclick="answer('A')">Que exija atualização constante</button>
+            <button onclick="answer('B')">Mais estável</button>
+            <button onclick="answer('C')">Que envolva um equilíbrio entre ambos</button>
+        </div>
+
+        <!-- Resultado Final -->
+        <div id="result" class="result"></div>
+    </div>
+
+    <script>
+        let currentQuestion = 1;
+        let answers = {A: 0, B: 0, C: 0};
+
+        function answer(option) {
+            answers[option]++;
+            document.getElementById('question' + currentQuestion).style.display = 'none';
+            currentQuestion++;
+            const nextQuestion = document.getElementById('question' + currentQuestion);
+            if (nextQuestion) {
+                nextQuestion.style.display = 'block';
+            } else {
+                showResult();
+            }
+        }
+
+        function showResult() {
+            const resultDiv = document.getElementById('result');
+            resultDiv.style.display = 'block';
+            let resultText = '';
+            if (answers.A > answers.B && answers.A > answers.C) {
+                resultText = 'Você tem mais perfil para Radiologia!';
+            } else if (answers.B > answers.A && answers.B > answers.C) {
+                resultText = 'Você tem mais perfil para Gerontologia!';
+            } else if (answers.C > answers.A && answers.C > answers.B) {
+                resultText = 'Você tem mais perfil para Nutrologia!';
+            } else {
+                resultText = 'Você tem perfil para mais de uma área. Considere explorar ambas!';
+            }
+            resultDiv.textContent = resultText;
+        }
+    </script>
+
+</body>
+</html>
